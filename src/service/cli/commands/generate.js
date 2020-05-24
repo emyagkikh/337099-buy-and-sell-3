@@ -7,7 +7,7 @@ const {InitialData} = require(`../../../InitialData`);
 const {CommonUtils} = require(`../../../utils/CommonUtils`);
 const {GeneratorUtils} = require(`../../../utils/GeneratorUtils`);
 
-const generatedObjectsCount = Object.freeze({
+const GeneratedObjectsCount = Object.freeze({
   DEFAULT: 1,
   MAX: 1000,
 });
@@ -42,11 +42,11 @@ const generateOffers = (count) => (
 
 module.exports = {
   name: `--generate`,
-  run(args = generatedObjectsCount.DEFAULT) {
+  run(args = GeneratedObjectsCount.DEFAULT) {
     let countOffer = Number.parseInt(args, ARGV_PARSE_NUMBER_SYSTEM);
 
-    if (countOffer > generatedObjectsCount.MAX) {
-      console.error(`Не больше ${generatedObjectsCount.MAX} объявлений`);
+    if (countOffer > GeneratedObjectsCount.MAX) {
+      console.error(`Не больше ${GeneratedObjectsCount.MAX} объявлений`);
       process.exit(Constant.ExitCode.ERROR);
     }
 
