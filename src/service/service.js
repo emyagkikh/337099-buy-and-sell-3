@@ -1,16 +1,13 @@
 'use strict';
 
 const {Cli} = require(`./cli/index.js`);
-const {
-  DEFAULT_COMMAND,
-  USER_ARGV_INDEX,
-} = require(`../constants`);
+const {Constant} = require(`../constant`);
 
-const userArguments = process.argv.slice(USER_ARGV_INDEX);
+const userArguments = process.argv.slice(Constant.USER_ARGV_INDEX);
 const [userCommand] = userArguments;
 
 if (userArguments.length === 0 || !Cli[userCommand]) {
-  Cli[DEFAULT_COMMAND].run();
+  Cli[Constant.DEFAULT_COMMAND].run();
 } else {
-  Cli[userCommand].run(userArguments.slice(1));
+  Cli[userCommand].run(userArguments.slice(1)[0]);
 }
