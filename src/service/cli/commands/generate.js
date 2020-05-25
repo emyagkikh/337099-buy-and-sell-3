@@ -12,6 +12,8 @@ const generatedObjectsCount = Object.freeze({
   MAX: 1000,
 });
 
+const ARGV_PARSE_NUMBER_SYSTEM = 10;
+
 const DESCRIPTION_MIN_SENTENCES_AMOUNT = 1;
 const DESCRIPTION_MAX_SENTENCES_AMOUNT = 5;
 const PICTURE_NAME_INT_LENGTH = 2;
@@ -41,7 +43,7 @@ const generateOffers = (count) => (
 module.exports = {
   name: `--generate`,
   run(args = generatedObjectsCount.DEFAULT) {
-    let countOffer = Number.parseInt(args, 10);
+    let countOffer = Number.parseInt(args, ARGV_PARSE_NUMBER_SYSTEM);
 
     if (countOffer > generatedObjectsCount.MAX) {
       console.error(`Не больше ${generatedObjectsCount.MAX} объявлений`);
