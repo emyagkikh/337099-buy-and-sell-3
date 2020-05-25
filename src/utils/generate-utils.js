@@ -4,10 +4,10 @@ const generatePictureName = (number, length) => {
   return number.toString().padStart(length, `0`);
 };
 
-const GeneratorUtils = {
+const GenerateUtils = {
   generatePictureName,
 };
 
 module.exports = {
-  GeneratorUtils,
+  GenerateUtils,
 };

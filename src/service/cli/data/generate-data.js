@@ -35,25 +35,13 @@ const OfferType = Object.freeze({
   SALE: `sale`,
 });
 
-const PictureRestrict = Object.freeze({
-  MIN: 1,
-  MAX: 16,
-});
-
-const SumRestrict = Object.freeze({
-  MIN: 1000,
-  MAX: 100000,
-});
-
-const InitialData = {
+const GenerateData = {
   TITLES,
   SENTENCES,
   CATEGORIES,
   OfferType,
-  PictureRestrict,
-  SumRestrict,
 };
 
 module.exports = {
-  InitialData,
+  GenerateData,
 };

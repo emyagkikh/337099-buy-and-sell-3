@@ -1,7 +1,5 @@
 'use strict';
 
-const {Constant} = require(`../../../constant`);
-
 module.exports = {
   name: `--help`,
   run() {
@@ -15,7 +13,6 @@ module.exports = {
     --help:               печатает этот текст
     --generate <\count\>    формирует файл mocks.json`
     );
-    process.exit(Constant.ExitCode.SUCCESS);
   }
 };
 

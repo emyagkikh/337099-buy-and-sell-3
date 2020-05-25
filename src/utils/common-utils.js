@@ -6,6 +6,7 @@ const getRandomInt = (min, max) => {
   const permissibleRange = Math.random() * (currentMax - currentMin + 1);
   return Math.floor(permissibleRange) + currentMin;
 };
+
 const shuffleArray = (array) => {
   const shuffledArray = array.slice();
 
