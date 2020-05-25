@@ -42,6 +42,4 @@ const GenerateData = {
   OfferType,
 };
 
-module.exports = {
-  GenerateData,
-};
+module.exports = GenerateData;

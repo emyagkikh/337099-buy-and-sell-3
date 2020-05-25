@@ -8,6 +8,4 @@ const GenerateUtils = {
   generatePictureName,
 };
 
-module.exports = {
-  GenerateUtils,
-};
+module.exports = GenerateUtils;

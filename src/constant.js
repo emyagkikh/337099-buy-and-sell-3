@@ -13,6 +13,4 @@ const Constant = {
   ExitCode,
 };
 
-module.exports = {
-  Constant,
-};
+module.exports = Constant;

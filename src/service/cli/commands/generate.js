@@ -2,10 +2,10 @@
 
 const fs = require(`fs`);
 
-const {Constant} = require(`../../../constant`);
-const {GenerateData} = require(`../data/generate-data`);
-const {CommonUtils} = require(`../../../utils/common-utils`);
-const {GenerateUtils} = require(`../../../utils/generate-utils`);
+const Constant = require(`../../../constant`);
+const GenerateData = require(`../data/generate-data`);
+const CommonUtils = require(`../../../utils/common-utils`);
+const GenerateUtils = require(`../../../utils/generate-utils`);
 
 const GeneratedObjectsCount = Object.freeze({
   DEFAULT: 1,

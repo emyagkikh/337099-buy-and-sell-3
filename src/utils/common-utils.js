@@ -23,6 +23,4 @@ const CommonUtils = {
   shuffleArray,
 };
 
-module.exports = {
-  CommonUtils,
-};
+module.exports = CommonUtils;
