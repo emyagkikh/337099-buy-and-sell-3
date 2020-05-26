@@ -2,14 +2,15 @@
 
 const fs = require(`fs`);
 
-const Constant = require(`../../../constant`);
-const GenerateData = require(`../data/generate-data`);
-const CommonUtils = require(`../../../utils/common-utils`);
-const GenerateUtils = require(`../../../utils/generate-utils`);
+const {ExitCode} = require(`../../../constant`);
+const {TITLES, SENTENCES, CATEGORIES, OfferType} = require(`../data/generate-data`);
+const {getRandomInt, shuffleArray} = require(`../../../utils/common-utils`);
+const generatePictureName = require(`../../../utils/generate-utils`);
 
 const GeneratedObjectsCount = Object.freeze({
-  DEFAULT: 1,
+  MIN: 0,
   MAX: 1000,
+  DEFAULT: 1,
 });
 
 const GeneratedPictureNameRestrict = Object.freeze({
@@ -24,27 +25,30 @@ const GeneratedSumRestrict = Object.freeze({
 
 const ARGV_PARSE_NUMBER_SYSTEM = 10;
 
-const DESCRIPTION_MIN_SENTENCES_AMOUNT = 1;
-const DESCRIPTION_MAX_SENTENCES_AMOUNT = 5;
+const GeneratedDescriptionSentencesRestrict = Object.freeze({
+  MIN: 1,
+  MAX: 5,
+});
+
 const PICTURE_NAME_INT_LENGTH = 2;
 const CATEGORY_MIN_ITEMS_AMOUNT = 1;
 const FILE_NAME = `mocks.json`;
 
 const generateOffers = (count) => (
   Array(count).fill({}).map(() => {
-    const TYPE_INDEX = CommonUtils.getRandomInt(0, Object.keys(GenerateData.OfferType).length - 1);
-    const DESCRIPTION_AMOUNT_INDEX = CommonUtils.getRandomInt(DESCRIPTION_MIN_SENTENCES_AMOUNT, DESCRIPTION_MAX_SENTENCES_AMOUNT - 1);
-    const PICTURE_NAME_NUMBER = CommonUtils.getRandomInt(GeneratedPictureNameRestrict.MIN, GeneratedPictureNameRestrict.MAX);
-    const CATEGORY_AMOUNT_INDEX = CommonUtils.getRandomInt(CATEGORY_MIN_ITEMS_AMOUNT, GenerateData.CATEGORIES.length - 1);
+    const typeIndex = getRandomInt(0, Object.keys(OfferType).length - 1);
+    const descriptionAmountIndex = getRandomInt(GeneratedDescriptionSentencesRestrict.MIN, GeneratedDescriptionSentencesRestrict.MAX - 1);
+    const pictureNameNumber = getRandomInt(GeneratedPictureNameRestrict.MIN, GeneratedPictureNameRestrict.MAX);
+    const categoryAmountIndex = getRandomInt(CATEGORY_MIN_ITEMS_AMOUNT, CATEGORIES.length - 1);
 
     return (
       {
-        type: GenerateData.OfferType[Object.keys(GenerateData.OfferType)[TYPE_INDEX]],
-        title: GenerateData.TITLES[CommonUtils.getRandomInt(0, GenerateData.TITLES.length - 1)],
-        description: CommonUtils.shuffleArray(GenerateData.SENTENCES).slice(0, DESCRIPTION_AMOUNT_INDEX).join(` `),
-        sum: CommonUtils.getRandomInt(GeneratedSumRestrict.MIN, GeneratedSumRestrict.MAX),
-        picture: `item${GenerateUtils.generatePictureName(PICTURE_NAME_NUMBER, PICTURE_NAME_INT_LENGTH)}.jpg`,
-        category: CommonUtils.shuffleArray(GenerateData.CATEGORIES).slice(0, CATEGORY_AMOUNT_INDEX),
+        type: OfferType[Object.keys(OfferType)[typeIndex]],
+        title: TITLES[getRandomInt(0, TITLES.length - 1)],
+        description: shuffleArray(SENTENCES).slice(0, descriptionAmountIndex).join(` `),
+        sum: getRandomInt(GeneratedSumRestrict.MIN, GeneratedSumRestrict.MAX),
+        picture: `item${generatePictureName(pictureNameNumber, PICTURE_NAME_INT_LENGTH)}.jpg`,
+        category: shuffleArray(CATEGORIES).slice(0, categoryAmountIndex),
       }
     );
   })
@@ -53,11 +57,16 @@ const generateOffers = (count) => (
 module.exports = {
   name: `--generate`,
   run(args = GeneratedObjectsCount.DEFAULT) {
-    const countOffer = Number.parseInt(args, ARGV_PARSE_NUMBER_SYSTEM);
+    const countOffer = Number.parseInt(args, ARGV_PARSE_NUMBER_SYSTEM) || GeneratedObjectsCount.DEFAULT;
+
+    if (countOffer < GeneratedObjectsCount.MIN) {
+      console.error(`Нельзя вводить отрицательное число`);
+      process.exit(ExitCode.ERROR);
+    }
 
     if (countOffer > GeneratedObjectsCount.MAX) {
       console.error(`Не больше ${GeneratedObjectsCount.MAX} объявлений`);
-      process.exit(Constant.ExitCode.SUCCESS);
+      process.exit(ExitCode.ERROR);
     }
 
     const content = JSON.stringify(generateOffers(countOffer));
@@ -65,7 +74,7 @@ module.exports = {
     fs.writeFile(FILE_NAME, content, (err) => {
       if (err) {
         console.error(`Can't write data to file...`);
-        process.exit(Constant.ExitCode.SUCCESS);
+        process.exit(ExitCode.ERROR);
       }
 
       console.info(`Operation success. File created.`);

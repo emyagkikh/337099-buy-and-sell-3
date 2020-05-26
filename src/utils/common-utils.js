@@ -18,9 +18,7 @@ const shuffleArray = (array) => {
   return shuffledArray;
 };
 
-const CommonUtils = {
+module.exports = {
   getRandomInt,
   shuffleArray,
 };
-
-module.exports = CommonUtils;

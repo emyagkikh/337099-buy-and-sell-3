@@ -1,15 +1,15 @@
 'use strict';
 
 const Cli = require(`./cli/index.js`);
-const Constant = require(`../constant`);
+const {DEFAULT_COMMAND, USER_ARGV_INDEX, ExitCode} = require(`../constant`);
 
-const userArguments = process.argv.slice(Constant.USER_ARGV_INDEX);
+const userArguments = process.argv.slice(USER_ARGV_INDEX);
 const [userCommand] = userArguments;
 const USER_GENERATE_COUNTER_INDEX = 1;
 
 if (!userArguments.length || !Cli[userCommand]) {
-  Cli[Constant.DEFAULT_COMMAND].run();
-  process.exitCode(Constant.ExitCode.SUCCESS);
+  Cli[DEFAULT_COMMAND].run();
+  process.exit(ExitCode.SUCCESS);
 }
 
 Cli[userCommand].run(userArguments[USER_GENERATE_COUNTER_INDEX]);

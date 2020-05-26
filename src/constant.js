@@ -1,16 +1,14 @@
 'use strict';
 
-const DEFAULT_COMMAND = `--generate`;
+const DEFAULT_COMMAND = `--help`;
 const USER_ARGV_INDEX = 2;
 const ExitCode = Object.freeze({
   SUCCESS: 0,
   ERROR: 1,
 });
 
-const Constant = {
+module.exports = {
   DEFAULT_COMMAND,
   USER_ARGV_INDEX,
-  ExitCode,
+  ExitCode
 };
-
-module.exports = Constant;
