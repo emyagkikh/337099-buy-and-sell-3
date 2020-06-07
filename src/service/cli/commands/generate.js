@@ -6,6 +6,7 @@ const {ExitCode} = require(`../../../constant`);
 const {TITLES, SENTENCES, CATEGORIES, OfferType} = require(`../data/generate-data`);
 const {getRandomInt, shuffleArray} = require(`../../../utils/common-utils`);
 const generatePictureName = require(`../../../utils/generate-utils`);
+const {logError, logSuccess} = require(`../../../utils/chalk-utils`);
 
 const GeneratedObjectsCount = Object.freeze({
   MIN: 0,
@@ -60,12 +61,12 @@ module.exports = {
     const countOffer = Number.parseInt(args, ARGV_PARSE_NUMBER_SYSTEM) || GeneratedObjectsCount.DEFAULT;
 
     if (countOffer < GeneratedObjectsCount.MIN) {
-      console.error(`Нельзя вводить отрицательное число`);
+      console.error(logError(`Нельзя вводить отрицательное число`));
       process.exit(ExitCode.ERROR);
     }
 
     if (countOffer > GeneratedObjectsCount.MAX) {
-      console.error(`Не больше ${GeneratedObjectsCount.MAX} объявлений`);
+      console.error(logError(`Не больше ${GeneratedObjectsCount.MAX} объявлений`));
       process.exit(ExitCode.ERROR);
     }
 
@@ -73,11 +74,11 @@ module.exports = {
 
     fs.writeFile(FILE_NAME, content, (err) => {
       if (err) {
-        console.error(`Can't write data to file...`);
+        console.error(logError(`Can't write data to file...`));
         process.exit(ExitCode.ERROR);
       }
 
-      console.info(`Operation success. File created.`);
+      console.info(logSuccess(`Operation success. File created.`));
     });
   }
 };

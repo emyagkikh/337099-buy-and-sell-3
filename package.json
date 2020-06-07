@@ -13,5 +13,8 @@
   "devDependencies": {
     "eslint": "6.0.0",
     "eslint-config-htmlacademy": "0.5.2"
+  },
+  "dependencies": {
+    "chalk": "4.0.0"
   }
 }
